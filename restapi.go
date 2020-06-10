@@ -576,6 +576,19 @@ func memberPermissions(guild *Guild, channel *Channel, member *Member) (apermiss
 	return apermissions
 }
 
+func (s *Session) UserProfile(userID string) (st *UserProfile, err error) {
+	uri := EndpointUserProfile(userID)
+
+	body, err := s.RequestWithBucketID("GET", uri, nil, EndpointUserProfile(userID))
+	if err != nil {
+		return
+	}
+
+	err = unmarshal(body, &st)
+
+	return
+}
+
 // ------------------------------------------------------------------------------------------------
 // Functions specific to Discord Guilds
 // ------------------------------------------------------------------------------------------------
